@@ -1,0 +1,22 @@
+program Logistica;
+
+uses
+  Forms,
+  UPrincipal in 'UPrincipal.pas' {FPrincipal},
+  UDM in 'UDM.pas' {DM: TDataModule},
+  ULogin in 'ULogin.pas' {FLogin},
+  UCadUsuario in 'UCadUsuario.pas' {FCadastroUsuarios},
+  UProdutos in 'UProdutos.pas' {FProdutos},
+  UCadProduto in 'UCadProduto.pas' {FCadastroProdutos},
+  UFormasPagamento in 'UFormasPagamento.pas' {FFormasPagamento},
+  UCadFormaPagamento in 'UCadFormaPagamento.pas' {FCadastroFormaPagamento},
+  UUsuarios in 'UUsuarios.pas' {FUsuarios};
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.Title := 'Logistica';
+  Application.CreateForm(TDM, DM);
+  Application.Run;
+end.

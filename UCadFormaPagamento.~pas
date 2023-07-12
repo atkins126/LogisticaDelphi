@@ -1,0 +1,50 @@
+unit UCadFormaPagamento;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls, DBCtrls, Mask, DB, Buttons, ExtCtrls;
+
+type
+  TFCadastroFormaPagamento = class(TForm)
+    P1: TPanel;
+    btnSalvar: TBitBtn;
+    btnCancelar: TBitBtn;
+    dsFormasPgto: TDataSource;
+    edDescricao: TDBEdit;
+    Label1: TLabel;
+    cbVista: TDBCheckBox;
+    edQtdParcelas: TDBEdit;
+    Label2: TLabel;
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure btnCancelarClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FCadastroFormaPagamento: TFCadastroFormaPagamento;
+
+implementation
+
+uses UDM;
+
+{$R *.dfm}
+
+
+procedure TFCadastroFormaPagamento.btnCancelarClick(Sender: TObject);
+begin
+  dm.cdsFormasPgto.Cancel;
+  close;
+end;
+
+procedure TFCadastroFormaPagamento.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+  btnCancelar.click;
+end;
+
+end.

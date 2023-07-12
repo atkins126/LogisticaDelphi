@@ -1,0 +1,496 @@
+object DM: TDM
+  OldCreateOrder = False
+  OnCreate = DataModuleCreate
+  Left = 588
+  Top = 312
+  Height = 328
+  Width = 854
+  object BDLogistica: TSQLConnection
+    ConnectionName = 'Logistica'
+    DriverName = 'Interbase'
+    GetDriverFunc = 'getSQLDriverINTERBASE'
+    LibraryName = 'dbexpint.dll'
+    LoginPrompt = False
+    Params.Strings = (
+      'DriverName=Interbase'
+      'Database=localhost:D:\Delphi\Logistica\BDS.fdb'
+      'RoleName=RoleName'
+      'User_Name=sysdba'
+      'Password=masterkey'
+      'ServerCharSet=ISO8859_1'
+      'SQLDialect=3'
+      'BlobSize=-1'
+      'CommitRetain=False'
+      'WaitOnLocks=True'
+      'ErrorResourceFile='
+      'LocaleCode=0000'
+      'Interbase TransIsolation=ReadCommited'
+      'Trim Char=False')
+    VendorLib = 'gds32.dll'
+    Connected = True
+    Left = 40
+    Top = 24
+  end
+  object dtsUsuarios: TSQLDataSet
+    GetMetadata = False
+    CommandText = 'USUARIOS'
+    CommandType = ctTable
+    MaxBlobSize = -1
+    Params = <>
+    SQLConnection = BDLogistica
+    Left = 112
+    Top = 24
+    object dtsUsuariosUSR_CODIGO: TIntegerField
+      FieldName = 'USR_CODIGO'
+      Required = True
+    end
+    object dtsUsuariosLOGIN: TStringField
+      FieldName = 'LOGIN'
+      Required = True
+      Size = 12
+    end
+    object dtsUsuariosSENHA: TStringField
+      FieldName = 'SENHA'
+      Required = True
+      Size = 16
+    end
+    object dtsUsuariosMASTER: TStringField
+      FieldName = 'MASTER'
+      Required = True
+      FixedChar = True
+      Size = 1
+    end
+  end
+  object dspUsuario: TDataSetProvider
+    DataSet = dtsUsuarios
+    Constraints = False
+    Left = 112
+    Top = 72
+  end
+  object cdsUsuario: TClientDataSet
+    Aggregates = <>
+    Params = <>
+    ProviderName = 'dspUsuario'
+    Left = 112
+    Top = 120
+    object cdsUsuarioUSR_CODIGO: TIntegerField
+      DisplayWidth = 16
+      FieldName = 'USR_CODIGO'
+      Required = True
+    end
+    object cdsUsuarioLOGIN: TStringField
+      DisplayWidth = 17
+      FieldName = 'LOGIN'
+      Required = True
+      Size = 12
+    end
+    object cdsUsuarioSENHA: TStringField
+      DisplayWidth = 27
+      FieldName = 'SENHA'
+      Required = True
+      Size = 16
+    end
+    object cdsUsuarioMASTER: TStringField
+      DisplayWidth = 13
+      FieldName = 'MASTER'
+      Required = True
+      FixedChar = True
+      Size = 1
+    end
+  end
+  object qryGenIDUsuario: TSQLQuery
+    MaxBlobSize = -1
+    Params = <>
+    SQL.Strings = (
+      'select GEN_ID(USR_ID,1) AS ID FROM RDB$DATABASE')
+    SQLConnection = BDLogistica
+    Left = 112
+    Top = 176
+    object qryGenIDUsuarioID: TFMTBCDField
+      FieldName = 'ID'
+      Required = True
+      Precision = 15
+      Size = 0
+    end
+  end
+  object dtsProdutos: TSQLDataSet
+    GetMetadata = False
+    CommandText = 'PRODUTOS'
+    CommandType = ctTable
+    MaxBlobSize = -1
+    Params = <>
+    SQLConnection = BDLogistica
+    Left = 208
+    Top = 24
+    object dtsProdutosPDT_ID: TIntegerField
+      FieldName = 'PDT_ID'
+      Required = True
+    end
+    object dtsProdutosPDT_NOME: TStringField
+      FieldName = 'PDT_NOME'
+      Required = True
+      Size = 255
+    end
+    object dtsProdutosPDT_ESTOQUE: TIntegerField
+      FieldName = 'PDT_ESTOQUE'
+      Required = True
+    end
+    object dtsProdutosCLN_ID: TIntegerField
+      FieldName = 'CLN_ID'
+      Required = True
+    end
+    object dtsProdutosPDT_VALOR: TFMTBCDField
+      FieldName = 'PDT_VALOR'
+      Required = True
+      Precision = 15
+      Size = 2
+    end
+    object dtsProdutosPDT_TIPO: TStringField
+      FieldName = 'PDT_TIPO'
+      Required = True
+      FixedChar = True
+      Size = 1
+    end
+  end
+  object dpsProduto: TDataSetProvider
+    DataSet = dtsProdutos
+    Constraints = False
+    Left = 208
+    Top = 72
+  end
+  object cdsProdutos: TClientDataSet
+    Aggregates = <>
+    Params = <>
+    ProviderName = 'dpsProduto'
+    Left = 208
+    Top = 120
+    object cdsProdutosPDT_ID: TIntegerField
+      FieldName = 'PDT_ID'
+      Required = True
+    end
+    object cdsProdutosPDT_NOME: TStringField
+      FieldName = 'PDT_NOME'
+      Required = True
+      Size = 255
+    end
+    object cdsProdutosPDT_ESTOQUE: TIntegerField
+      FieldName = 'PDT_ESTOQUE'
+      Required = True
+    end
+    object cdsProdutosCLN_ID: TIntegerField
+      FieldName = 'CLN_ID'
+      Required = True
+    end
+    object cdsProdutosPDT_VALOR: TFMTBCDField
+      FieldName = 'PDT_VALOR'
+      Required = True
+      Precision = 15
+      Size = 2
+    end
+    object cdsProdutosPDT_TIPO: TStringField
+      FieldName = 'PDT_TIPO'
+      Required = True
+      FixedChar = True
+      Size = 1
+    end
+  end
+  object qryGenIDProduto: TSQLQuery
+    MaxBlobSize = -1
+    Params = <>
+    SQL.Strings = (
+      'select GEN_ID(PDT_ID,1) AS ID FROM RDB$DATABASE')
+    SQLConnection = BDLogistica
+    Left = 208
+    Top = 176
+    object FMTBCDField1: TFMTBCDField
+      FieldName = 'ID'
+      Required = True
+      Precision = 15
+      Size = 0
+    end
+  end
+  object dtsClientes: TSQLDataSet
+    GetMetadata = False
+    CommandText = 'CLIENTES'
+    CommandType = ctTable
+    MaxBlobSize = -1
+    Params = <>
+    SQLConnection = BDLogistica
+    Left = 312
+    Top = 24
+    object dtsClientesCLN_ID: TIntegerField
+      FieldName = 'CLN_ID'
+      Required = True
+    end
+    object dtsClientesCLN_NOME: TStringField
+      FieldName = 'CLN_NOME'
+      Required = True
+      Size = 255
+    end
+    object dtsClientesCLN_DOCUMENTO: TStringField
+      FieldName = 'CLN_DOCUMENTO'
+      Required = True
+      Size = 14
+    end
+    object dtsClientesCLN_TELEFONE: TStringField
+      FieldName = 'CLN_TELEFONE'
+      Required = True
+      Size = 11
+    end
+    object dtsClientesTIPO: TStringField
+      FieldName = 'TIPO'
+      Required = True
+      FixedChar = True
+      Size = 1
+    end
+    object dtsClientesPAIS_ID: TIntegerField
+      FieldName = 'PAIS_ID'
+      Required = True
+    end
+  end
+  object dpsClientes: TDataSetProvider
+    DataSet = dtsClientes
+    Constraints = False
+    Left = 312
+    Top = 72
+  end
+  object cdsClientes: TClientDataSet
+    Aggregates = <>
+    Params = <>
+    ProviderName = 'dpsClientes'
+    Left = 312
+    Top = 120
+    object cdsClientesPDT_ID: TIntegerField
+      FieldName = 'PDT_ID'
+      Required = True
+    end
+    object cdsClientesPDT_NOME: TStringField
+      FieldName = 'PDT_NOME'
+      Required = True
+      Size = 255
+    end
+    object cdsClientesPDT_ESTOQUE: TIntegerField
+      FieldName = 'PDT_ESTOQUE'
+      Required = True
+    end
+    object cdsClientesCLN_ID: TIntegerField
+      FieldName = 'CLN_ID'
+      Required = True
+    end
+    object cdsClientesPDT_VALOR: TFMTBCDField
+      FieldName = 'PDT_VALOR'
+      Required = True
+      Precision = 15
+      Size = 2
+    end
+    object cdsClientesPDT_TIPO: TStringField
+      FieldName = 'PDT_TIPO'
+      Required = True
+      FixedChar = True
+      Size = 1
+    end
+  end
+  object qryGenIDCliente: TSQLQuery
+    MaxBlobSize = -1
+    Params = <>
+    SQL.Strings = (
+      'select GEN_ID(CLN_ID,1) AS ID FROM RDB$DATABASE')
+    SQLConnection = BDLogistica
+    Left = 312
+    Top = 176
+    object FMTBCDField4: TFMTBCDField
+      FieldName = 'ID'
+      Required = True
+      Precision = 15
+      Size = 0
+    end
+  end
+  object dtsFormasPgto: TSQLDataSet
+    GetMetadata = False
+    CommandText = 'FORMAS_PGTO'
+    CommandType = ctTable
+    MaxBlobSize = -1
+    Params = <>
+    SQLConnection = BDLogistica
+    Left = 416
+    Top = 24
+    object dtsFormasPgtoPGTO_ID: TIntegerField
+      FieldName = 'PGTO_ID'
+      Required = True
+    end
+    object dtsFormasPgtoDESCRICAO: TStringField
+      FieldName = 'DESCRICAO'
+      Required = True
+      Size = 40
+    end
+    object dtsFormasPgtoQTD_PARCELAS: TSmallintField
+      FieldName = 'QTD_PARCELAS'
+      Required = True
+    end
+    object dtsFormasPgtoCOND_PGTO: TStringField
+      FieldName = 'COND_PGTO'
+      Required = True
+      FixedChar = True
+      Size = 1
+    end
+  end
+  object dspFormasPgto: TDataSetProvider
+    DataSet = dtsFormasPgto
+    Constraints = False
+    Left = 416
+    Top = 72
+  end
+  object cdsFormasPgto: TClientDataSet
+    Aggregates = <>
+    Params = <>
+    ProviderName = 'dspFormasPgto'
+    Left = 416
+    Top = 120
+    object cdsFormasPgtoPGTO_ID: TIntegerField
+      FieldName = 'PGTO_ID'
+      Required = True
+    end
+    object cdsFormasPgtoDESCRICAO: TStringField
+      FieldName = 'DESCRICAO'
+      Required = True
+      Size = 40
+    end
+    object cdsFormasPgtoQTD_PARCELAS: TSmallintField
+      FieldName = 'QTD_PARCELAS'
+      Required = True
+    end
+    object cdsFormasPgtoCOND_PGTO: TStringField
+      FieldName = 'COND_PGTO'
+      Required = True
+      FixedChar = True
+      Size = 1
+    end
+  end
+  object qryGenIDFormasPgto: TSQLQuery
+    MaxBlobSize = -1
+    Params = <>
+    SQL.Strings = (
+      'select GEN_ID(PGTO_ID,1) AS ID FROM RDB$DATABASE')
+    SQLConnection = BDLogistica
+    Left = 416
+    Top = 176
+    object qryGenIDFormasPgtoID: TFMTBCDField
+      FieldName = 'ID'
+      Required = True
+      Precision = 15
+      Size = 0
+    end
+  end
+  object dtsPais: TSQLDataSet
+    GetMetadata = False
+    CommandText = 'PAISES'
+    CommandType = ctTable
+    MaxBlobSize = -1
+    Params = <>
+    SQLConnection = BDLogistica
+    Left = 512
+    Top = 24
+    object dtsPaisPAIS_ID: TIntegerField
+      FieldName = 'PAIS_ID'
+      Required = True
+    end
+    object dtsPaisNOME: TStringField
+      FieldName = 'NOME'
+      Required = True
+      Size = 60
+    end
+  end
+  object dspPais: TDataSetProvider
+    DataSet = dtsPais
+    Constraints = False
+    Left = 512
+    Top = 72
+  end
+  object cdsPais: TClientDataSet
+    Aggregates = <>
+    Params = <>
+    ProviderName = 'dspPais'
+    Left = 512
+    Top = 120
+    object cdsPaisPAIS_ID: TIntegerField
+      FieldName = 'PAIS_ID'
+      Required = True
+    end
+    object cdsPaisNOME: TStringField
+      FieldName = 'NOME'
+      Required = True
+      Size = 60
+    end
+  end
+  object qryGenIDPais: TSQLQuery
+    MaxBlobSize = -1
+    Params = <>
+    SQL.Strings = (
+      'select GEN_ID(PAIS_ID,1) AS ID FROM RDB$DATABASE')
+    SQLConnection = BDLogistica
+    Left = 512
+    Top = 176
+    object qryGenIDPaisID: TFMTBCDField
+      FieldName = 'ID'
+      Required = True
+      Precision = 15
+      Size = 0
+    end
+  end
+  object dsMeiosTransporte: TSQLDataSet
+    GetMetadata = False
+    CommandText = 'MEIOS_TRANSPORTE'
+    CommandType = ctTable
+    MaxBlobSize = -1
+    Params = <>
+    SQLConnection = BDLogistica
+    Left = 592
+    Top = 24
+    object dsMeiosTransporteTRANS_ID: TIntegerField
+      FieldName = 'TRANS_ID'
+      Required = True
+    end
+    object dsMeiosTransporteDESCRICAO: TStringField
+      FieldName = 'DESCRICAO'
+      Required = True
+      Size = 255
+    end
+  end
+  object dspMeiosTransporte: TDataSetProvider
+    DataSet = dsMeiosTransporte
+    Constraints = False
+    Left = 592
+    Top = 72
+  end
+  object cdsMeiosTransporte: TClientDataSet
+    Aggregates = <>
+    Params = <>
+    ProviderName = 'dspMeiosTransporte'
+    Left = 592
+    Top = 120
+    object cdsMeiosTransporteTRANS_ID: TIntegerField
+      FieldName = 'TRANS_ID'
+      Required = True
+    end
+    object cdsMeiosTransporteDESCRICAO: TStringField
+      FieldName = 'DESCRICAO'
+      Required = True
+      Size = 255
+    end
+  end
+  object qryGenIDMeiosTransporte: TSQLQuery
+    MaxBlobSize = -1
+    Params = <>
+    SQL.Strings = (
+      'select GEN_ID(TRANS_ID,1) AS ID FROM RDB$DATABASE')
+    SQLConnection = BDLogistica
+    Left = 592
+    Top = 176
+    object qryGenIDMeiosTransporteID: TFMTBCDField
+      FieldName = 'ID'
+      Required = True
+      Precision = 15
+      Size = 0
+    end
+  end
+end

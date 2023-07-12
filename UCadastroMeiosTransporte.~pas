@@ -1,0 +1,86 @@
+unit UCadastroMeiosTransporte;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, DB, StdCtrls, DBCtrls, Mask, Buttons, ExtCtrls, FMTBcd, SqlExpr;
+
+type
+  TFCadastroMeiosTrans = class(TForm)
+    P1: TPanel;
+    P2: TPanel;
+    btnSalvar: TBitBtn;
+    btnCancelar: TBitBtn;
+    edPais: TDBEdit;
+    Label1: TLabel;
+    dsPaises: TDataSource;
+    procedure btnCancelarClick(Sender: TObject);
+    procedure FormKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure btnSalvarClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FCadastroMeiosTrans: TFCadastroMeiosTrans;
+
+implementation
+
+uses UDM;
+
+{$R *.dfm}
+
+procedure TFCadastroMeiosTrans.btnCancelarClick(Sender: TObject);
+begin
+  dm.cdsPais.Cancel;
+  Close;
+end;
+
+procedure TFCadastroMeiosTrans.FormKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if key = VK_ESCAPE then
+    begin
+    dm.cdsPais.Cancel;
+    Close;
+    end;
+  if key = VK_RETURN then
+    Perform(WM_NEXTDLGCTL,0,0);
+
+end;
+
+procedure TFCadastroMeiosTrans.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+  if dm.cdsPais.State in [dsInsert,dsEdit] then
+  dm.cdsPais.Cancel;
+end;
+
+procedure TFCadastroMeiosTrans.btnSalvarClick(Sender: TObject);
+begin
+
+  if edPais.text = '' then
+  begin
+    ShowMessage('Informe o nome do país');
+    exit;
+  end;
+
+  if dm.cdsPais.State=dsInsert then
+  begin
+    dm.qryGenIDPais.Close;
+    dm.qryGenIDPais.Open;
+    dm.cdsPaisPAIS_ID.AsInteger := dm.qryGenIDPaisID.AsInteger;
+  end;
+    dm.cdsPais.Post;
+    dm.cdsPais.ApplyUpdates(0);
+    ShowMessage('Informações armazenadas com Sucesso');
+    Close;
+
+end;
+
+end.
